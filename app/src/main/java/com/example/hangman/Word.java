@@ -1,14 +1,22 @@
 package com.example.hangman;
 
-import java.util.ArrayList;
-import java.util.List;
+import androidx.annotation.NonNull;
+
+import java.util.Random;
 
 /**
  *
  */
 public class Word {
+
+    // todo hard code word
+    private static final String[] WORD = {"HANGMAN"};
+    private static final String[] HINT = {"GAME"};
+
+
     private char[] word;
     private int[] mask;
+    private String hint;
 
     public Word() {
         generateNewWord();
@@ -16,9 +24,10 @@ public class Word {
 
     /**
      * input the button value, and check the integrity
-     * @param c  button value
+     *
+     * @param c button value
      */
-    public boolean check(char c) {
+    public boolean hasChar(char c) {
         boolean flag = false;
         for (int i = 0; i < word.length; i++) {
             if (word[i] == c) {
@@ -29,12 +38,28 @@ public class Word {
         return flag;
     }
 
+    /**
+     * generate word to use.
+     * Can be hard code. Like, use a list to store all word, then random choose one.
+     */
     public void generateNewWord() {
-        word = new char[] {};
+        int rnd = new Random().nextInt(WORD.length);
+        String choose = WORD[rnd];
+
+        word = new char[choose.length()];
         mask = new int[word.length];
+        hint = HINT[rnd];
+
+        for (int i = 0; i < choose.length(); i++)
+            word[i] = choose.charAt(i);
     }
 
-    public String getWord() {
+    public String getHint() {
+        return hint;
+    }
+
+    @Override
+    public String toString() {
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < word.length; i++) {
             if (mask[i] == 1) {
@@ -45,5 +70,12 @@ public class Word {
             result.append(" ");
         }
         return result.toString();
+    }
+
+    public boolean isAllMatch() {
+        for (int i : mask)
+            if (i == 0)
+                return false;
+        return true;
     }
 }
