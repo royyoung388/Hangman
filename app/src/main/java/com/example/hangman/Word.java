@@ -10,8 +10,8 @@ import java.util.Random;
 public class Word {
 
     // todo hard code word
-    private static final String[] WORD = {"HANGMAN"};
-    private static final String[] HINT = {"GAME"};
+    private static final String[] WORD = {"HANGMAN", "WINDY", "WINTER", "NINE", "PIZZA", "BOSTON"};
+    private static final String[] HINT = {"GAME", "WEATHER", "SEASON", "NUMBER", "FOOD", "CITY"};
 
 
     private char[] word;
@@ -20,6 +20,12 @@ public class Word {
 
     public Word() {
         generateNewWord();
+    }
+
+    public Word(char[] word, String hint) {
+        this.word = word;
+        mask = new int[word.length];
+        this.hint = hint;
     }
 
     /**
@@ -52,6 +58,10 @@ public class Word {
 
         for (int i = 0; i < choose.length(); i++)
             word[i] = choose.charAt(i);
+    }
+
+    public char[] getWord() {
+        return word;
     }
 
     public String getHint() {
