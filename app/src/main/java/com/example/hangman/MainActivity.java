@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageView imgHangman;
     private Word word;
-    private int turn;
+    private int turn = 0;
     private ArrayList<Integer> pressedID = new ArrayList<>(26);
 
     public static final int MAX_WRONG = 8;
@@ -46,9 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (tvHint != null) {
             tvHint = (TextView) findViewById(R.id.tv_hint);
-            tvHint.setVisibility(View.INVISIBLE);
             btnHint.setOnClickListener(v -> {
-                tvHint.setVisibility(View.VISIBLE);
+                tvHint.setText(word.getHint());
                 turn++;
             });
             showImage();
@@ -127,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
             view.getBackground().clearColorFilter();
             view.setEnabled(true);
         }
+        pressedID.clear();
         word.generateNewWord();
         tvWord.setText(word.toString());
         imgHangman.setImageDrawable(null);
